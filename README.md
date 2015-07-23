@@ -14,12 +14,14 @@ Each time a ticket status changes to `Closed`, a zendesk trigger hits the sinatr
     a) Install [localtunnel](http://localtunnel.me/) 
     
     b) Run it using port `4567`
+      
+        lt --port 4567
 
 2. Set up a test target and trigger in zendesk
 
-    a) The trigger should require the requester be you (the tester) and include any change. The trigger message should be a json block that includes the id and status. 
+    a) The [trigger](https://aptible.zendesk.com/agent/admin/triggers) should require the requester be you (the tester) and include any change. The trigger message should be a json block that includes the id and status. 
 
-    b) The target should be set to the local endpoint you set up in (1).  NB: You wil need to reset this endpoint each time the tunnel session ends
+    b) The [target](https://aptible.zendesk.com/agent/admin/extensions) should be set to the local endpoint you set up in (1).  NB: You wil need to reset this endpoint each time the tunnel session ends
 
 3.  Make your changes to the app, then fire it up and alter your test ticket to see the response. 
 
