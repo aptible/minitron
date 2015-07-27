@@ -37,7 +37,8 @@ require 'segment/analytics'
 post '/' do
   payload = JSON.parse(params['payload'])
   status = payload['status']
-  if status == 'Closed'
+  group = payload['group']
+  if status == 'Closed' && group == 'Support' 
     id = payload['id']
     ticket = zendesk_client.ticket.find(id: id)
     ticket_metrics = ticket.metrics
