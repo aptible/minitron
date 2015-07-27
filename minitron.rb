@@ -34,6 +34,8 @@ require 'segment/analytics'
 
 =end
 
+set :port, (ENV['PORT'] || 3000).to_i  
+
 post '/' do
   payload = JSON.parse(params['payload'])
   status = payload['status']
