@@ -13,7 +13,7 @@ Tickets updated to a `Closed` status will trigger a post to the sinatra server w
 
 ###Local testing
 
-1. Set up a local enpdoint using Localtunnel
+1. Set up a local enpdoint using Localtunnel.
 
     a) Install [localtunnel](http://localtunnel.me/) 
     
@@ -21,15 +21,21 @@ Tickets updated to a `Closed` status will trigger a post to the sinatra server w
       
         lt --port 4567
 
-2. Set up a test target and trigger in Zendesk
+2. Set up a test target and trigger in Zendesk.
 
-    a) The Zendesk trigger should require the requester be you (the tester) and include any change. The trigger message should be a json block that includes the id and status. 
+    a) The [Zendesk trigger](https://support.zendesk.com/hc/en-us/articles/203662106-Streamlining-workflow-with-ticket-updates-and-triggers#topic_usx_vxx_tb) should require the requester be you (the tester) and include any change. The trigger message should be a json block that includes the id and status. 
 
-    b) The Zendesk target should be set to the local endpoint you set up in (1).  NB: You will need to reset this endpoint each time the tunnel session ends
+              {
+                  "id": "{{ticket.id}}",
+                  "group":"{{ticket.group.name}}",
+                  "status": "{{ticket.status}}"
+              }
+
+    b) The [Zendesk target](https://support.zendesk.com/hc/en-us/articles/203662136-Notifying-external-targets) should be set to the local endpoint you set up in (1).  NB: You will need to reset this endpoint each time the tunnel session ends
 
 3.  Make your changes to the app, then fire it up and alter your test ticket to see the response. 
 
-4.  View any received messages in the segment debugger logs
+4.  View any received messages in the segment debugger logs.
 
 ## Copyright and License
 
