@@ -13,7 +13,7 @@ require 'segment/analytics'
   "event": "Created Support Ticket"
   "timestamp": "2015-07-21T19:50:13Z",
   "properties": {
-    "ticket_id": 2263, 
+    "ticket_id": 2263,
     "priority": "normal",
     "subject": "Colbytron tester ticket",
     "tags": [],
@@ -34,15 +34,17 @@ require 'segment/analytics'
 
 =end
 
+set :port, (ENV['PORT'] || 3000).to_i
+
 post '/' do
   payload = JSON.parse(params['payload'])
   status = payload['status']
   group = payload['group']
-  if status == 'Closed' && group == 'Support' 
+  if status == 'Closed' && group == 'Support'
     id = payload['id']
     ticket = zendesk_client.ticket.find(id: id)
     ticket_metrics = ticket.metrics
-    requester = ticket.requester 
+    requester = ticket.requester
     assignee = ticket.assignee
     summary = {
       user_id: requester.external_id,
