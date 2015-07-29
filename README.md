@@ -3,13 +3,17 @@
 #Minitron
 _________
 
-_Minitron.rb_ is a zendesk-to-segment webhook-based integration.
+_Minitron.rb_ is a Zendesk => Segment.io webhook-based integration.
 
-Each time a ticket status changes to `Closed`, a zendesk trigger hits the sinatra app endpoint with an ID and a status.  The app then uses that ID to query the zendesk api for ticket and ticket_metric data which is forwarded on to segment.
+Tickets updated to a `Closed` status will trigger a post to the sinatra server which contains ID, Status, and Group. Minitron uses the ticket ID to query the Zendesk api for ticket and ticket_metric data which is forwarded on to Segment.
+
+### Deploying to Aptible
+
+
 
 ###Local testing
 
-1. Set up a local enpdoint using localtunnel
+1. Set up a local enpdoint using Localtunnel
 
     a) Install [localtunnel](http://localtunnel.me/) 
     
@@ -17,15 +21,19 @@ Each time a ticket status changes to `Closed`, a zendesk trigger hits the sinatr
       
         lt --port 4567
 
-2. Set up a test target and trigger in zendesk
+2. Set up a test target and trigger in Zendesk
 
-    a) The [trigger](https://aptible.zendesk.com/agent/admin/triggers) should require the requester be you (the tester) and include any change. The trigger message should be a json block that includes the id and status. 
+    a) The Zendesk trigger should require the requester be you (the tester) and include any change. The trigger message should be a json block that includes the id and status. 
 
-    b) The [target](https://aptible.zendesk.com/agent/admin/extensions) should be set to the local endpoint you set up in (1).  NB: You wil need to reset this endpoint each time the tunnel session ends
+    b) The Zendesk target should be set to the local endpoint you set up in (1).  NB: You will need to reset this endpoint each time the tunnel session ends
 
 3.  Make your changes to the app, then fire it up and alter your test ticket to see the response. 
 
-4.  View any received messages in the [segment debugger](https://segment.com/aptible/backend-prod/debugger)
+4.  View any received messages in the segment debugger logs
+
+## Copyright and License
+
+MIT License, see [LICENSE](LICENSE.md) for details.
 
 Copyright (c) 2015 [Aptible](https://www.aptible.com). All rights reserved.
 
