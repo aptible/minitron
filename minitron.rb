@@ -82,7 +82,7 @@ def zendesk_client
   # https://github.com/zendesk/zendesk_api_client_rb#configuration
   @zendesk_client ||= ZendeskAPI::Client.new do |config|
     config.url = 'https://aptible.zendesk.com/api/v2'
-    config.username = 'colby@aptible.com'
+    config.username = ENV['ZENDESK_USER']
     config.token = ENV['ZENDESK_TOKEN']
   end
 end
