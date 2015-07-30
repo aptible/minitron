@@ -1,16 +1,12 @@
 ![Aptible, Inc.](http://aptible-media-assets-manual.s3.amazonaws.com/web-horizontal-350.png)
 
-#Minitron
-
----
-
-
+# Minitron
 
 _Minitron.rb_ is a Zendesk => Segment.io webhook-based integration.
 
 Tickets updated to a `Closed` status will trigger a post to the sinatra server which contains ID, Status, and Group. Minitron uses the ticket ID to query the Zendesk api for ticket and ticket_metric data which is forwarded on to Segment.
 
-###Local testing
+### Local testing
 
 1. Set up a local enpdoint using Localtunnel.
 
@@ -36,7 +32,7 @@ Tickets updated to a `Closed` status will trigger a post to the sinatra server w
 
 4.  View any received messages in the segment debugger logs.
 
-### Deploy on Aptible:
+### Deploy on Aptible
 
  1. Create an app in your [Aptible dashboard](https://dashboard.aptible.com) for Minitron. 
 
@@ -55,6 +51,7 @@ Tickets updated to a `Closed` status will trigger a post to the sinatra server w
    git push aptible master
    ```
  6. Set your Zendesk target endpoint to your aptible domain (e.g. minitron.on-aptible.com)
+
 ## Copyright and License
 
 MIT License, see [LICENSE](LICENSE.md) for details.
