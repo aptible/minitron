@@ -4,38 +4,35 @@ require 'json'
 require 'pry'
 require 'segment/analytics'
 
-=begin
-
-//NOTE: Ticket ID not matched to actual ticket data--sample only
-
-{
-  "user_id": "d198724e-8ed1-4895-89fd-2d117d68a783",
-  "event": "Created Support Ticket"
-  "timestamp": "2015-07-21T19:50:13Z",
-  "properties": {
-    "ticket_id": 2263,
-    "priority": "normal",
-    "subject": "Colbytron tester ticket",
-    "tags": [],
-    "satisfaction_rating_score": "unoffered",
-    "created_at": "2015-07-21T19:50:13Z",
-    "updated_at": "2015-07-21T20:26:31Z",
-    "initially_assigned_at": "2015-07-21T20:13:23Z",
-    "assigned_at": "2015-07-21T20:13:23Z",
-    "solved_at": null,
-    "reply_time_in_calendar_minutes": 36,
-    "reply_time_in_business_minutes": 36,
-    "first_resolution_time_in_calendar_minutes": null,
-    "first_resolution_time_in_business_minutes": null,
-    "full_resolution_time_in_calendar_minutes": null,
-    "full_resolution_time_in_business_minutes": null
-  }
-}
-
-=end
+# NOTE: Ticket ID not matched to actual ticket data--sample only
+#
+# {
+#   "user_id": "d198724e-8ed1-4895-89fd-2d117d68a783",
+#   "event": "Created Support Ticket"
+#   "timestamp": "2015-07-21T19:50:13Z",
+#   "properties": {
+#     "ticket_id": 2263,
+#     "priority": "normal",
+#     "subject": "Colbytron tester ticket",
+#     "tags": [],
+#     "satisfaction_rating_score": "unoffered",
+#     "created_at": "2015-07-21T19:50:13Z",
+#     "updated_at": "2015-07-21T20:26:31Z",
+#     "initially_assigned_at": "2015-07-21T20:13:23Z",
+#     "assigned_at": "2015-07-21T20:13:23Z",
+#     "solved_at": null,
+#     "reply_time_in_calendar_minutes": 36,
+#     "reply_time_in_business_minutes": 36,
+#     "first_resolution_time_in_calendar_minutes": null,
+#     "first_resolution_time_in_business_minutes": null,
+#     "full_resolution_time_in_calendar_minutes": null,
+#     "full_resolution_time_in_business_minutes": null
+#   }
+# }
 
 set :port, (ENV['PORT'] || 3000).to_i
 
+# rubocop:disable LineLength
 post '/' do
   payload = JSON.parse(params['payload'])
   status = payload['status']
@@ -45,7 +42,6 @@ post '/' do
     ticket = zendesk_client.ticket.find(id: id)
     ticket_metrics = ticket.metrics
     requester = ticket.requester
-    assignee = ticket.assignee
     summary = {
       user_id: requester.external_id,
       event: 'Created Support Ticket',
@@ -73,6 +69,7 @@ post '/' do
     segment_client.track(summary)
   end
 end
+# rubocop:enable LineLength
 
 private
 
@@ -91,4 +88,3 @@ def segment_client
   fail 'ENV["SEGMENTIO_WRITEKEY"] not set!' unless ENV['SEGMENTIO_WRITEKEY']
   @segment_client = Segment::Analytics.new(write_key: ENV['SEGMENTIO_WRITEKEY'])
 end
-
