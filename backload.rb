@@ -12,7 +12,8 @@ def load!
     ticket_metrics = ticket.metrics
     requester = ticket.requester
     unless requester.external_id
-      fail "Failed to process ticket #{ticket.id}: no external ID"
+      puts "Failed to process ticket #{ticket.id}: no external ID"
+      next
     end
     summary = {
       user_id: requester.external_id,
