@@ -7,14 +7,16 @@ require 'pry'
 def load!
   zendesk_client.tickets.all do |ticket|
     status = ticket.status
-    group = ticket.group
-    next unless status == 'Closed' && group == 'Support'
+    group = ticket.group.name
+    id = ticket.id
+    next unless status == 'closed' && group == 'Support'
     ticket_metrics = ticket.metrics
     requester = ticket.requester
     unless requester.external_id
-      puts "Failed to process ticket #{ticket.id}: no external ID"
+      puts "Failed to process ticket ##{ticket.id}: no external ID"
       next
     end
+    puts "Processing ticket ##{ticket.id}"
     summary = {
       user_id: requester.external_id,
       event: 'Created Support Ticket',
