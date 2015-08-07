@@ -11,7 +11,10 @@ def load!
     next unless status == 'Closed' && group == 'Support'
     ticket_metrics = ticket.metrics
     requester = ticket.requester
-    next unless requester.external_id
+    unless requester.external_id
+      puts "Failed to process ticket #{ticket.id}: no external ID"
+      next
+    end
     summary = {
       user_id: requester.external_id,
       event: 'Created Support Ticket',
