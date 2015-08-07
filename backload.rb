@@ -23,6 +23,8 @@ def load!
       timestamp: ticket.created_at,
       properties: {
         ticket_id: id,
+        requester_name: ticket.requester.name
+        requester_org: ticket.requester.organization.name
         priority: ticket.priority,
         subject: ticket.subject,
         tags: ticket.tags.map(&:id),
