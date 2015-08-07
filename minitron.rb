@@ -37,13 +37,13 @@ post '/' do
   payload = JSON.parse(params['payload'])
   status = payload['status']
   group = payload['group']
-  if status == 'Closed' && group == 'Support'
+  if status == 'closed' && group == 'Support'
     id = payload['id']
     ticket = zendesk_client.ticket.find(id: id)
     ticket_metrics = ticket.metrics
     requester = ticket.requester
     unless requester.external_id
-      fail "Failed to process ticket #{ticket.id}: no external ID"
+      fail "Failed to process ticket ##{ticket.id}: no external ID"
     end
     summary = {
       user_id: requester.external_id,
